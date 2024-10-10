@@ -1,0 +1,9 @@
+#SERVER
+server:
+  port: 8082
+
+#SPRING
+spring:
+  application:
+    name: Habits
+
