@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import ru.kolodin.model.habitstatus.HabitStatus;
 
 /**
- * Репозиторий статуса привычек
+ * Репозиторий статуса привычек.
  */
 @Repository
 public interface HabitStatusesRepository extends JpaRepository<HabitStatus, Long> {
