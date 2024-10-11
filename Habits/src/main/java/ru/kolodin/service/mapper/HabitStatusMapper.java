@@ -48,7 +48,7 @@ public class HabitStatusMapper {
      */
     public HabitStatus habitStatusDTOToHabitStatus(HabitStatusDTO habitStatusDTO) {
         return new HabitStatus(habitStatusDTO.getId(),
-                habitDbService.getHabitById(habitStatusDTO.getHabitDTO().getId()),
+                habitDbService.getById(habitStatusDTO.getHabitDTO().getId()),
                 habitStatusDTO.getHabitDate(), habitStatusDTO.getStatus());
     }
 

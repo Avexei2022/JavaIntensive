@@ -49,7 +49,7 @@ public class HabitMapper {
      */
     public Habit habitDTOToHabit(HabitDTO habitDTO) {
         return new Habit(habitDTO.getId(), habitDTO.getTitle(), habitDTO.getDescription(), habitDTO.getFrequency(),
-                userDbService.findUserByEmail(habitDTO.getUserDTO().getEmail()), habitDTO.getCreationDate());
+                userDbService.findByEmail(habitDTO.getUserDTO().getEmail()), habitDTO.getCreationDate());
     }
 
     /**

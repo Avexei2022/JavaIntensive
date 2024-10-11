@@ -14,31 +14,31 @@ public interface HabitDbService {
      * Добавить / изменить привычку.
      * @param habit привычка.
      */
-    void saveHabit(Habit habit) throws RuntimeException;
+    void save(Habit habit) throws RuntimeException;
 
     /**
      * Получить привычку по id.
      * @param id - уникальный номер.
      * @return привычка.
      */
-    Habit getHabitById(Long id);
+    Habit getById(Long id);
 
     /**
      * Удалить привычку по id.
      * @param id id привычки.
      */
-    void deleteHabitById(Long id);
+    void deleteById(Long id);
 
     /**
      * Удалить привычку.
      * @param habit привычка.
      */
-    void deleteHabit(Habit habit);
+    void delete(Habit habit);
 
     /**
      * Удалить все привычки.
      */
-    void deleteAllHabit();
+    void deleteAll();
 
     /**
      * Удалить все привычки пользователя
@@ -52,7 +52,7 @@ public interface HabitDbService {
      * @param pageSize размер страницы.
      * @return страница списка привычек.
      */
-    Page<Habit> getAllHabit(int pageNumber, int pageSize);
+    Page<Habit> getAll(int pageNumber, int pageSize);
 
     /**
      * Получить страницу из списка всех привычек пользователя.
@@ -61,16 +61,23 @@ public interface HabitDbService {
      * @param pageSize размер страницы.
      * @return страница списка привычек пользователя.
      */
-    Page<Habit> getAllHabitByUser(User user, int pageNumber, int pageSize);
+    Page<Habit> getAllByUser(User user, int pageNumber, int pageSize);
 
     /**
-     * Получить страницу из списка всех привычек пользователя.
+     * Получить страницу из списка всех привычек пользователя с фильтром периодичности.
      * @param user пользователь.
      * @param frequency периодичность.
      * @param pageNumber номер страницы.
      * @param pageSize размер страницы.
      * @return страница списка привычек пользователя.
      */
-    Page<Habit> getAllHabitByUserAndFrequency(
+    Page<Habit> getAllByUserAndFrequency(
             User user, Frequency frequency, int pageNumber, int pageSize);
+
+    /**
+     * Проверить наличие привычки в БД
+     * @param id ID привычки
+     * @return результат поиска
+     */
+    Boolean isExists(Long id);
 }

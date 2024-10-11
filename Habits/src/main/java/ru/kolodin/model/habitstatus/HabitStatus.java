@@ -39,8 +39,8 @@ public class HabitStatus {
      * Дата выполнения привычки
      */
     @Temporal(TemporalType.DATE)
-    @Column(name = "habit_date")
-    private Date habitDate;
+    @Column(name = "date")
+    private Date date;
 
     /**
      * Статус выполнения привычки

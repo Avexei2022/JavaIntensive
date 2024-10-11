@@ -29,7 +29,7 @@ public class HabitStatusDTO extends DTO {
     /**
      * Дата выполнения привычки
      */
-    private Date habitDate;
+    private Date date;
 
     /**
      * Статус выполнения привычки

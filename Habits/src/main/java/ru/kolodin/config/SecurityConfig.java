@@ -46,7 +46,7 @@ public class SecurityConfig {
      */
     @Bean
     public UserDetailsService userDetailsService() {
-        return userDbService::findUserByEmail;
+        return userDbService::findByEmail;
     }
 
     /**

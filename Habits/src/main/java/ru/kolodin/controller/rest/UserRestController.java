@@ -41,7 +41,7 @@ public class UserRestController {
             @PathVariable("pageSize") Integer pageSize) {
         PageDTO usersPageDTO;
         try {
-            usersPageDTO = userDbService.findAllUser(pageNumber, pageSize);
+            usersPageDTO = userDbService.findAll(pageNumber, pageSize);
         } catch (RuntimeException e) {
             throw new AnyReasonException(e.getMessage());
         }

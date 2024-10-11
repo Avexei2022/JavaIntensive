@@ -37,7 +37,7 @@ public class HabitDbServiceImpl implements HabitDbService {
      * @param habit привычка
      */
     @Override
-    public void saveHabit(Habit habit) throws AnyReasonException {
+    public void save(Habit habit) throws AnyReasonException {
         try {
             if (!userDbService.isExists(habit.getId())) {
                 throw new ObjectNotFoundException("Владелец привычки в базе данных не найден!");
@@ -54,7 +54,7 @@ public class HabitDbServiceImpl implements HabitDbService {
      * @return привычка.
      */
     @Override
-    public Habit getHabitById(Long id) {
+    public Habit getById(Long id) {
         return habitsRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("Привычка с id = " + id + " в базе данных не найдена"));
     }
@@ -64,7 +64,7 @@ public class HabitDbServiceImpl implements HabitDbService {
      * @param id id привычки.
      */
     @Override
-    public void deleteHabitById(Long id) {
+    public void deleteById(Long id) {
         habitsRepository.deleteById(id);
     }
 
@@ -73,7 +73,7 @@ public class HabitDbServiceImpl implements HabitDbService {
      * @param habit привычка.
      */
     @Override
-    public void deleteHabit(Habit habit) {
+    public void delete(Habit habit) {
         habitsRepository.delete(habit);
     }
 
@@ -81,7 +81,7 @@ public class HabitDbServiceImpl implements HabitDbService {
      * Удалить все привычки.
      */
     @Override
-    public void deleteAllHabit() {
+    public void deleteAll() {
         habitsRepository.deleteAll();
     }
 
@@ -101,7 +101,7 @@ public class HabitDbServiceImpl implements HabitDbService {
      * @return страница списка привычек.
      */
     @Override
-    public Page<Habit> getAllHabit(int pageNumber, int pageSize) {
+    public Page<Habit> getAll(int pageNumber, int pageSize) {
         Pageable pageable = pageService.getPageable(pageNumber, pageSize);
         return habitsRepository.findAll(pageable);
     }
@@ -114,13 +114,13 @@ public class HabitDbServiceImpl implements HabitDbService {
      * @return страница списка привычек пользователя.
      */
     @Override
-    public Page<Habit> getAllHabitByUser(User user, int pageNumber, int pageSize) {
+    public Page<Habit> getAllByUser(User user, int pageNumber, int pageSize) {
         Pageable pageable = pageService.getPageable(pageNumber, pageSize);
         return habitsRepository.findAllByUser(user.getId(), pageable);
     }
 
     /**
-     * Получить страницу из списка всех привычек пользователя.
+     * Получить страницу из списка всех привычек пользователя с фильтром периодичности.
      * @param user пользователь.
      * @param frequency периодичность.
      * @param pageNumber номер страницы.
@@ -128,8 +128,19 @@ public class HabitDbServiceImpl implements HabitDbService {
      * @return страница списка привычек пользователя.
      */
     @Override
-    public Page<Habit> getAllHabitByUserAndFrequency(User user, Frequency frequency, int pageNumber, int pageSize) {
+    public Page<Habit> getAllByUserAndFrequency(User user, Frequency frequency, int pageNumber, int pageSize) {
         Pageable pageable = pageService.getPageable(pageNumber, pageSize);
         return habitsRepository.findAllByUserAndFrequency(user.getId(), frequency, pageable);
     }
+
+    /**
+     * Проверить наличие привычки в БД
+     * @param id ID привычки
+     * @return результат поиска
+     */
+    @Override
+    public Boolean isExists(Long id) {
+        return habitsRepository.existsById(id);
+    }
+
 }

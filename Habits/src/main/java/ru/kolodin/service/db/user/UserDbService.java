@@ -16,42 +16,42 @@ public interface UserDbService {
      * @param pageSize количество пользователей в странице
      * @return запрашиваемая страница из списка пользователей с информационной частью о списке
      */
-    PageDTO findAllUser(Integer pageNumber, Integer pageSize);
+    PageDTO findAll(Integer pageNumber, Integer pageSize);
 
     /**
      * Получить пользователя по имени
      * @param username - имя пользователя
      * @return пользователь
      */
-    User findUserByUsername(String username);
+    User findByUsername(String username);
 
     /**
      * Получить пользователя по адресу электронной почты
      * @param email адрес электронной почты
      * @return пользователь
      */
-    User findUserByEmail(String email);
+    User findByEmail(String email);
 
     /**
      * Получить DTO пользователя по имени
      * @param username - имя пользователя
      * @return DTO пользователя
      */
-    UserDTO findUserDTOByUsername(String username);
+    UserDTO findDTOByUsername(String username);
 
     /**
      * Получить DTO пользователя по адресу электронной почты
      * @param email адрес электронной почты
      * @return DTO пользователя
      */
-    UserDTO findUserDTOByEmail(String email);
+    UserDTO findDTOByEmail(String email);
 
     /**
      * Регистрация нового пользователя
      * @param user Новый пользователь
      * @return сообщение о результате регистрации
      */
-    Message registerNewUser(User user);
+    Message registerNew(User user);
 
     /**
      * Проверить наличие пользователя в БД

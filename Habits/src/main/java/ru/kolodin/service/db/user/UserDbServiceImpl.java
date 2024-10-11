@@ -51,7 +51,7 @@ public class UserDbServiceImpl implements UserDbService {
      * @return запрашиваемая страница из списка пользователей с информационной частью о списке
      */
     @Override
-   public PageDTO findAllUser(Integer pageNumber, Integer pageSize){
+   public PageDTO findAll(Integer pageNumber, Integer pageSize){
         Pageable pageable = pageService.getPageable(pageNumber, pageSize);
         Page<User> userResultPage;
         try {
@@ -68,7 +68,7 @@ public class UserDbServiceImpl implements UserDbService {
      * @return пользователь
      */
     @Override
-    public User findUserByUsername(String username) {
+    public User findByUsername(String username) {
         return usersRepository.findUserByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found!"));
     }
@@ -79,7 +79,7 @@ public class UserDbServiceImpl implements UserDbService {
      * @return пользователь
      */
     @Override
-    public User findUserByEmail(String email) {
+    public User findByEmail(String email) {
         return usersRepository.findUserByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found!"));
     }
@@ -90,7 +90,7 @@ public class UserDbServiceImpl implements UserDbService {
      * @return DTO пользователя
      */
     @Override
-    public UserDTO findUserDTOByUsername(String username) {
+    public UserDTO findDTOByUsername(String username) {
         User user = usersRepository.findUserByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found!"));
         return userMapper.userToDTO(user);
@@ -102,7 +102,7 @@ public class UserDbServiceImpl implements UserDbService {
      * @return DTO пользователя
      */
     @Override
-    public UserDTO findUserDTOByEmail(String email) {
+    public UserDTO findDTOByEmail(String email) {
         User user = usersRepository.findUserByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found!"));
         return userMapper.userToDTO(user);
@@ -114,7 +114,7 @@ public class UserDbServiceImpl implements UserDbService {
      * @return сообщение о результате регистрации
      */
     @Override
-    public Message registerNewUser(User user) {
+    public Message registerNew(User user) {
         Message message = new Message();
         String newUserEmail = user.getEmail();
         if (usersRepository.findUserByEmail(newUserEmail).isPresent()) {
