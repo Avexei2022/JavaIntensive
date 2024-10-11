@@ -37,9 +37,9 @@ public class HabitDbServiceImpl implements HabitDbService {
      * @param habit привычка
      */
     @Override
-    public void save(Habit habit) throws AnyReasonException {
+    public void save(Habit habit) throws ObjectNotFoundException, AnyReasonException {
         try {
-            if (!userDbService.isExists(habit.getId())) {
+            if (habit.getId() != null && !userDbService.isExists(habit.getId())) {
                 throw new ObjectNotFoundException("Владелец привычки в базе данных не найден!");
             }
             habitsRepository.save(habit);
@@ -86,12 +86,12 @@ public class HabitDbServiceImpl implements HabitDbService {
     }
 
     /**
-     * Удалить все привычки пользователя
-     * @param user пользователь
+     * Удалить все привычки пользователя.
+     * @param id ID пользователя.
      */
     @Override
-    public void deleteAllByUser(User user) {
-        habitsRepository.deleteAllByUser(user.getId());
+    public void deleteAllByUser(Long id) {
+        habitsRepository.deleteAllByUser(id);
     }
 
     /**
@@ -108,29 +108,29 @@ public class HabitDbServiceImpl implements HabitDbService {
 
     /**
      * Получить страницу из списка всех привычек пользователя.
-     * @param user пользователь.
+     * @param userId ID пользователя.
      * @param pageNumber номер страницы.
      * @param pageSize размер страницы.
      * @return страница списка привычек пользователя.
      */
     @Override
-    public Page<Habit> getAllByUser(User user, int pageNumber, int pageSize) {
+    public Page<Habit> getAllByUser(Long userId, int pageNumber, int pageSize) {
         Pageable pageable = pageService.getPageable(pageNumber, pageSize);
-        return habitsRepository.findAllByUser(user.getId(), pageable);
+        return habitsRepository.findAllByUser(userId, pageable);
     }
 
     /**
      * Получить страницу из списка всех привычек пользователя с фильтром периодичности.
-     * @param user пользователь.
+     * @param userId ID пользователя.
      * @param frequency периодичность.
      * @param pageNumber номер страницы.
      * @param pageSize размер страницы.
      * @return страница списка привычек пользователя.
      */
     @Override
-    public Page<Habit> getAllByUserAndFrequency(User user, Frequency frequency, int pageNumber, int pageSize) {
+    public Page<Habit> getAllByUserAndFrequency(Long userId, Frequency frequency, int pageNumber, int pageSize) {
         Pageable pageable = pageService.getPageable(pageNumber, pageSize);
-        return habitsRepository.findAllByUserAndFrequency(user.getId(), frequency, pageable);
+        return habitsRepository.findAllByUserAndFrequency(userId, frequency, pageable);
     }
 
     /**

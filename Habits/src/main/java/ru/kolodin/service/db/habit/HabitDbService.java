@@ -41,10 +41,10 @@ public interface HabitDbService {
     void deleteAll();
 
     /**
-     * Удалить все привычки пользователя
-     * @param user пользователь
+     * Удалить все привычки пользователя.
+     * @param id ID пользователя.
      */
-    void deleteAllByUser(User user);
+    void deleteAllByUser(Long id);
 
     /**
      * Получить страницу из списка всех привычек.
@@ -56,23 +56,23 @@ public interface HabitDbService {
 
     /**
      * Получить страницу из списка всех привычек пользователя.
-     * @param user пользователь.
+     * @param userId ID пользователя.
      * @param pageNumber номер страницы.
      * @param pageSize размер страницы.
      * @return страница списка привычек пользователя.
      */
-    Page<Habit> getAllByUser(User user, int pageNumber, int pageSize);
+    Page<Habit> getAllByUser(Long userId, int pageNumber, int pageSize);
 
     /**
      * Получить страницу из списка всех привычек пользователя с фильтром периодичности.
-     * @param user пользователь.
+     * @param userId ID пользователя.
      * @param frequency периодичность.
      * @param pageNumber номер страницы.
      * @param pageSize размер страницы.
      * @return страница списка привычек пользователя.
      */
     Page<Habit> getAllByUserAndFrequency(
-            User user, Frequency frequency, int pageNumber, int pageSize);
+            Long userId, Frequency frequency, int pageNumber, int pageSize);
 
     /**
      * Проверить наличие привычки в БД

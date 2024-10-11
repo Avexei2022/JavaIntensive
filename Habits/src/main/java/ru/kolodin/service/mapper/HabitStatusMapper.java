@@ -28,7 +28,7 @@ public class HabitStatusMapper {
     public HabitStatusDTO habitStatusToDTO(HabitStatus habitStatus) {
         return new HabitStatusDTO(habitStatus.getId(),
                 habitMapper.habitToDTO(habitStatus.getHabit()),
-                habitStatus.getHabitDate(),
+                habitStatus.getDate(),
                 habitStatus.getStatus());
     }
 
@@ -49,7 +49,7 @@ public class HabitStatusMapper {
     public HabitStatus habitStatusDTOToHabitStatus(HabitStatusDTO habitStatusDTO) {
         return new HabitStatus(habitStatusDTO.getId(),
                 habitDbService.getById(habitStatusDTO.getHabitDTO().getId()),
-                habitStatusDTO.getHabitDate(), habitStatusDTO.getStatus());
+                habitStatusDTO.getDate(), habitStatusDTO.getStatus());
     }
 
     /**
