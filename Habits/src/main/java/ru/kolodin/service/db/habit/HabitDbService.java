@@ -3,7 +3,11 @@ package ru.kolodin.service.db.habit;
 import org.springframework.data.domain.Page;
 import ru.kolodin.model.habits.Frequency;
 import ru.kolodin.model.habits.Habit;
+import ru.kolodin.model.habitstatus.HabitStatus;
 import ru.kolodin.model.users.User;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Сервис привычек
@@ -55,13 +59,26 @@ public interface HabitDbService {
     Page<Habit> getAll(int pageNumber, int pageSize);
 
     /**
+     * Получить список всех привычек.
+     * @return список привычек.
+     */
+    List<Habit> getAll();
+
+    /**
      * Получить страницу из списка всех привычек пользователя.
      * @param userId ID пользователя.
      * @param pageNumber номер страницы.
      * @param pageSize размер страницы.
      * @return страница списка привычек пользователя.
      */
-    Page<Habit> getAllByUser(Long userId, int pageNumber, int pageSize);
+    Page<Habit> getAllByUserId(Long userId, int pageNumber, int pageSize);
+
+    /**
+     * Получить список всех привычек пользователя.
+     * @param email email пользователя.
+     * @return страница список привычек пользователя.
+     */
+    List<Habit> getAllByUserEmail(String email);
 
     /**
      * Получить страницу из списка всех привычек пользователя с фильтром периодичности.
@@ -73,6 +90,18 @@ public interface HabitDbService {
      */
     Page<Habit> getAllByUserAndFrequency(
             Long userId, Frequency frequency, int pageNumber, int pageSize);
+
+    /**
+     * Получить страницу из списка привычек пользователя с фильтром по дате создания.
+     * @param userId ID пользователя.
+     * @param dateFrom от даты включительно.
+     * @param dateTo до даты включительно.
+     * @param pageNumber номер страницы.
+     * @param pageSize размер страницы.
+     * @return страница статусов привычки.
+     */
+    Page<Habit> getAllByUserAndDateBetween(
+            Long userId, Date dateFrom, Date dateTo, int pageNumber, int pageSize);
 
     /**
      * Проверить наличие привычки в БД

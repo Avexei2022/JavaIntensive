@@ -1,14 +1,13 @@
 package ru.kolodin.service.db.habitstatus;
 
 import org.springframework.data.domain.Page;
-import ru.kolodin.model.habits.Habit;
 import ru.kolodin.model.habitstatus.HabitStatus;
 import ru.kolodin.model.habitstatus.Status;
 
 import java.util.Date;
 
 /**
- * Сервис истории привычек
+ * Сервис базы данных истории привычек
  */
 public interface HabitStatusDbService {
 
@@ -32,7 +31,7 @@ public interface HabitStatusDbService {
     void deleteById(Long id);
 
     /**
-     * Удалить статус привычку.
+     * Удалить статус привычки.
      * @param habitStatus статус привычки.
      */
     void delete(HabitStatus habitStatus);
@@ -43,34 +42,34 @@ public interface HabitStatusDbService {
     void deleteAll();
 
     /**
-     * Удалить все статусы конкретной привычки
-     * @param habit привычка
+     * Удалить все статусы конкретной привычки.
+     * @param habitId  ID привычки.
      */
-    void deleteAllByHabit(Habit habit);
+    void deleteAllByHabit(Long habitId);
 
     /**
      * Получить страницу из списка статусов привычки.
-     * @param habit привычка.
+     * @param habitId ID привычки.
      * @param pageNumber номер страницы.
      * @param pageSize размер страницы.
      * @return страница статусов привычки.
      */
-    Page<HabitStatus> getAllByHabit(Habit habit, int pageNumber, int pageSize);
+    Page<HabitStatus> getAllByHabit(Long habitId, int pageNumber, int pageSize);
 
     /**
      * Получить страницу из списка статусов привычки с фильтром по статусу.
-     * @param habit привычка.
+     * @param habitId ID привычки.
      * @param status статус.
      * @param pageNumber номер страницы.
      * @param pageSize размер страницы.
      * @return страница статусов привычки.
      */
     Page<HabitStatus> getAllByHabitAndStatus(
-            Habit habit, Status status, int pageNumber, int pageSize);
+            Long habitId, Status status, int pageNumber, int pageSize);
 
     /**
      * Получить страницу из списка статусов привычки с фильтром по дате.
-     * @param habit привычка.
+     * @param habitId ID привычки.
      * @param dateFrom от даты включительно.
      * @param dateTo до даты включительно.
      * @param pageNumber номер страницы.
@@ -78,7 +77,7 @@ public interface HabitStatusDbService {
      * @return страница статусов привычки.
      */
     Page<HabitStatus> getAllByHabitAndDateBetween(
-            Habit habit, Date dateFrom, Date dateTo, int pageNumber, int pageSize);
+            Long habitId, Date dateFrom, Date dateTo, int pageNumber, int pageSize);
 
     /**
      * Проверить наличие статуса привычки в БД

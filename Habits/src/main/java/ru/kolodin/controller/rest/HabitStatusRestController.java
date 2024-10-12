@@ -1,5 +1,6 @@
 package ru.kolodin.controller.rest;
 
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
@@ -14,51 +15,51 @@ import org.springframework.web.bind.annotation.*;
 import ru.kolodin.model.enums.Period;
 import ru.kolodin.model.exceptions.AnyReasonException;
 import ru.kolodin.model.exceptions.ObjectNotFoundException;
-import ru.kolodin.model.habits.Frequency;
 import ru.kolodin.model.habits.dto.HabitDTO;
+import ru.kolodin.model.habitstatus.Status;
+import ru.kolodin.model.habitstatus.dto.HabitStatusDTO;
 import ru.kolodin.model.message.Message;
 import ru.kolodin.model.page.PageDTO;
-import ru.kolodin.model.users.dto.UserDTO;
-import ru.kolodin.service.main.HabitService;
+import ru.kolodin.service.main.HabitStatusService;
 
 import java.util.Date;
 
 
 /**
  * REST Контроллер привычек.
- * Сваггер http://localhost:8082/swagger-ui/index.html
  */
-@Tag(name = "Контроллер привычек", description = "CRUD привычек")
+@Tag(name = "Контроллер статуса привычек", description = "CRUD статуса привычек")
 @Log
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/habit")
+@RequestMapping("/status")
 @SecurityScheme(  name = "JWT",
         type = SecuritySchemeType.HTTP,
         bearerFormat = "JWT",
         scheme = "bearer")
-public class HabitRestController {
+public class HabitStatusRestController {
 
-    private final HabitService habitService;
+
+    private final HabitStatusService habitStatusService;
 
     /**
-     * Добавить привычку в базу данных
-     * @param habitDTO ДТО привычки
-     * @return сообщение о результате со статусом
+     * Добавить статус привычки в базу данных
+     * @param habitStatusDTO ДТО статуса привычки
+     * @return сообщение о результате
      */
     @Operation(
-            summary = "Добавить привычку в базу данных"
+            summary = "Добавить статус привычки в базу данных"
     )
     @SecurityRequirement(name = "JWT")
     @PostMapping("/add")
     public ResponseEntity<Message> add(
             @RequestBody
-            @Parameter(description = "ДТО привычки")
-            HabitDTO habitDTO) {
+            @Parameter(description = "ДТО статуса привычки")
+            HabitStatusDTO habitStatusDTO) {
         Message message = new Message();
         try {
-            habitService.add(habitDTO);
-            message.setMessage("Привычка успешно добавлена");
+            habitStatusService.add(habitStatusDTO);
+            message.setMessage("Статус привычки успешно добавлен");
         } catch (RuntimeException e) {
             message.setMessage(e.getMessage());
         }
@@ -66,23 +67,23 @@ public class HabitRestController {
     }
 
     /**
-     * Изменить привычку в базе данных
-     * @param habitDTO ДТО привычки
-     * @return сообщение о результате со статусом
+     * Изменить статус привычки в базе данных.
+     * @param habitStatusDTO ДТО статуса привычки.
+     * @return сообщение о результате.
      */
     @Operation(
-            summary = "Изменить привычку в базе данных"
+            summary = "Изменить статус привычки в базе данных"
     )
     @SecurityRequirement(name = "JWT")
     @PutMapping("/update")
     public ResponseEntity<Message> update(
             @RequestBody
-            @Parameter(description = "ДТО привычки")
-            HabitDTO habitDTO) {
+            @Parameter(description = "ДТО статуса привычки")
+            HabitStatusDTO habitStatusDTO) {
         Message message = new Message();
         try {
-            habitService.update(habitDTO);
-            message.setMessage("Привычка успешно изменена");
+            habitStatusService.update(habitStatusDTO);
+            message.setMessage("Статус привычки успешно изменен");
         } catch (RuntimeException e) {
             message.setMessage(e.getMessage());
         }
@@ -90,46 +91,46 @@ public class HabitRestController {
     }
 
     /**
-     * Получить привычку по Id.
-     * @param id ID привычки.
-     * @return привычка.
+     * Получить статус привычки по Id.
+     * @param id ID статуса привычки.
+     * @return статус привычки.
      */
     @Operation(
-            summary = "Получить привычку по Id"
+            summary = "Получить статус привычки по Id"
     )
     @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
-    public ResponseEntity<HabitDTO> getById(
+    public ResponseEntity<HabitStatusDTO> getById(
             @PathVariable("id")
-            @Parameter(description = "ID привычки")
+            @Parameter(description = "ID статуса привычки")
             Long id) {
-        HabitDTO habitDTO;
+        HabitStatusDTO habitStatusDTO;
         try {
-            habitDTO = habitService.getById(id);
+            habitStatusDTO = habitStatusService.getById(id);
         } catch (ObjectNotFoundException e) {
             throw new ObjectNotFoundException(e.getMessage());
         }
-        return new ResponseEntity<>(habitDTO, HttpStatus.OK);
+        return new ResponseEntity<>(habitStatusDTO, HttpStatus.OK);
     }
 
     /**
-     * Удалить привычку по Id.
-     * @param id ID привычки.
-     * @return сообщение о результате удаления привычки.
+     * Удалить статус привычки по Id.
+     * @param id ID статуса привычки.
+     * @return сообщение о результате удаления статуса привычки.
      */
     @Operation(
-            summary = "Удалить привычку по Id"
+            summary = "Удалить статус привычки по Id"
     )
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     public ResponseEntity<Message> deleteById(
             @PathVariable("id")
-            @Parameter(description = "ID привычки")
+            @Parameter(description = "ID статуса привычки")
             Long id) {
         Message message = new Message();
         try {
-            habitService.deleteById(id);
-            message.setMessage("Привычка успешно удалены");
+            habitStatusService.deleteById(id);
+            message.setMessage("Статус привычки успешно удалены");
         } catch (RuntimeException e) {
             throw new AnyReasonException("Что-то пошло не так. " + e.getMessage());
         }
@@ -137,23 +138,23 @@ public class HabitRestController {
     }
 
     /**
-     * Удалить привычку.
-     * @param habitDTO ДТО привычки.
-     * @return сообщение о результатах удаления привычки.
+     * Удалить статус привычки.
+     * @param habitStatusDTO ДТО статуса привычки.
+     * @return сообщение о результатах удаления статуса привычки.
      */
     @Operation(
-            summary = "Удалить привычку"
+            summary = "Удалить статус привычки"
     )
     @SecurityRequirement(name = "JWT")
-    @DeleteMapping("/habit")
+    @DeleteMapping("/")
     public ResponseEntity<Message> delete(
             @RequestBody
-            @Parameter(description = "ДТО привычки")
-            HabitDTO habitDTO) {
+            @Parameter(description = "ДТО статуса привычки")
+            HabitStatusDTO habitStatusDTO) {
         Message message = new Message();
         try {
-            habitService.delete(habitDTO);
-            message.setMessage("Привычка успешно удалены");
+            habitStatusService.delete(habitStatusDTO);
+            message.setMessage("Статус привычки успешно удалены");
         } catch (RuntimeException e) {
             throw new AnyReasonException("Что-то пошло не так. " + e.getMessage());
         }
@@ -161,19 +162,19 @@ public class HabitRestController {
     }
 
     /**
-     * Удалить все привычки.
-     * @return сообщение о результате удаления привычек.
+     * Удалить все статусы привычек.
+     * @return сообщение о результате удаления статуса привычек.
      */
     @Operation(
-            summary = "Удалить все привычки"
+            summary = "Удалить все статусы привычек"
     )
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/all")
     public ResponseEntity<Message> deleteAll() {
         Message message = new Message();
         try {
-            habitService.deleteAll();
-            message.setMessage("Все привычки успешно удалены");
+            habitStatusService.deleteAll();
+            message.setMessage("Все статусы привычек успешно удалены");
         } catch (RuntimeException e) {
             throw new AnyReasonException("Что-то пошло не так. " + e.getMessage());
         }
@@ -181,23 +182,23 @@ public class HabitRestController {
     }
 
     /**
-     * Удалить все привычки пользователя.
-     * @param userDTO ДТО пользователя.
-     * @return сообщение о результатах удаления привычки.
+     * Удалить все статусы конкретной привычки
+     * @param habitDTO ДТО привычки.
+     * @return сообщение о результатах удаления.
      */
     @Operation(
-            summary = "Удалить все привычки пользователя"
+            summary = "Удалить все статусы конкретной привычки"
     )
     @SecurityRequirement(name = "JWT")
-    @DeleteMapping("/user")
-    public ResponseEntity<Message> deleteByUser(
+    @DeleteMapping("/habit")
+    public ResponseEntity<Message> deleteAllByHabit(
             @RequestBody
-            @Parameter(description = "ДТО пользователя")
-            UserDTO userDTO) {
+            @Parameter(description = "ДТО привычки")
+            HabitDTO habitDTO) {
         Message message = new Message();
         try {
-            habitService.deleteByUser(userDTO);
-            message.setMessage("Привычки пользователя успешно удалены");
+            habitStatusService.deleteAllByHabit(habitDTO);
+            message.setMessage("Статусы привычки успешно удалены");
         } catch (RuntimeException e) {
             throw new AnyReasonException("Что-то пошло не так. " + e.getMessage());
         }
@@ -205,18 +206,18 @@ public class HabitRestController {
     }
 
     /**
-     * Получить страницу из списка привычек с фильтром по пользователю.
+     * Получить страницу из списка статусов привычки.
      * @param pageNumber номер страницы.
      * @param pageSize размер страницы.
-     * @param userDTO ДТО пользователя.
-     * @return страница привычек пользователя.
+     * @param habitDTO ДТО привычки.
+     * @return страница статусов привычки.
      */
     @Operation(
-            summary = "Получить страницу из списка привычек с фильтром по пользователю"
+            summary = "Получить страницу из списка статусов привычки"
     )
     @SecurityRequirement(name = "JWT")
-    @GetMapping("/user/{pageNumber}/{pageSize}")
-    public ResponseEntity<PageDTO> getAllByUser(
+    @GetMapping("/habit/{pageNumber}/{pageSize}")
+    public ResponseEntity<PageDTO> getAllByHabit(
             @PathVariable("pageNumber")
             @Parameter(description = "номер запрашиваемой страницы")
             Integer pageNumber,
@@ -224,34 +225,34 @@ public class HabitRestController {
             @Parameter(description = "размер страницы / количество объектов")
             Integer pageSize,
             @RequestBody
-            @Parameter(description = "ДТО пользователя")
-            UserDTO userDTO) {
+            @Parameter(description = "ДТО привычки")
+            HabitDTO habitDTO) {
 
-        PageDTO habitsPageDTO;
+        PageDTO habitStatusPageDTO;
         try{
-            habitsPageDTO = habitService
-                    .getAllByUser(userDTO,
+            habitStatusPageDTO = habitStatusService
+                    .getAllByHabit(habitDTO,
                             pageNumber,
                             pageSize);
         } catch (RuntimeException e) {
             throw new AnyReasonException(e.getMessage());
         }
-        return new ResponseEntity<>(habitsPageDTO, HttpStatus.OK);
+        return new ResponseEntity<>(habitStatusPageDTO, HttpStatus.OK);
     }
 
     /**
-     * Получить страницу из списка привычек пользователя с фильтром по периодичности.
+     * Получить страницу из списка статусов привычки с фильтром по статусу.
      * @param pageNumber номер страницы.
      * @param pageSize размер страницы.
-     * @param userDTO ДТО пользователя.
-     * @param frequency периодичность.
-     * @return страница привычек пользователя.
+     * @param habitDTO ДТО привычки.
+     * @param status статус.
+     * @return страница статусов привычки.
      */
     @Operation(
-            summary = "Получить страницу из списка привычек пользователя с фильтром по периодичности"
+            summary = "Получить страницу из списка статусов привычки с фильтром по статусу"
     )
     @SecurityRequirement(name = "JWT")
-    @GetMapping("/frequency/{pageNumber}/{pageSize}")
+    @GetMapping("/habit/status/{pageNumber}/{pageSize}")
     public ResponseEntity<PageDTO> getAllByUserAndFrequency(
             @PathVariable("pageNumber")
             @Parameter(description = "номер запрашиваемой страницы")
@@ -261,39 +262,39 @@ public class HabitRestController {
             Integer pageSize,
             @RequestBody
             @Parameter(description = "ДТО привычки")
-            UserDTO userDTO,
-            @RequestParam
-            @Parameter(description = "периодичность привычки")
-            Frequency frequency) {
+            HabitDTO habitDTO,
+            @RequestBody
+            @Parameter(description = "статус привычки")
+            Status status) {
 
-        PageDTO habitsPageDTO;
+        PageDTO habitStatusPageDTO;
         try{
-            habitsPageDTO = habitService
-                    .getAllByUserAndFrequency(userDTO,
-                            frequency,
+            habitStatusPageDTO = habitStatusService
+                    .getAllByHabitAndStatus(habitDTO,
+                            status,
                             pageNumber,
                             pageSize);
         } catch (RuntimeException e) {
             throw new AnyReasonException(e.getMessage());
         }
-        return new ResponseEntity<>(habitsPageDTO, HttpStatus.OK);
+        return new ResponseEntity<>(habitStatusPageDTO, HttpStatus.OK);
     }
 
     /**
-     * Получить страницу из списка привычек пользователя с фильтром по дате.
+     * Получить страницу из списка статусов привычки с фильтром по дате.
      * @param dateFrom от даты.
      * @param dateTo до даты.
      * @param pageNumber номер страницы.
      * @param pageSize размер страницы.
-     * @param userDTO ДТО пользователя.
-     * @return страница привычек.
+     * @param habitDTO ДТО привычки.
+     * @return страница статусов привычки.
      */
     @Operation(
-            summary = "Получить страницу из списка привычек пользователя с фильтром по дате."
+            summary = "Получить страницу из списка статусов привычки с фильтром по дате."
     )
     @SecurityRequirement(name = "JWT")
-    @GetMapping("/user/date/between/{pageNumber}/{pageSize}")
-    public ResponseEntity<PageDTO> getAllByUserAndDateBetween(
+    @GetMapping("/habit/date/between/{pageNumber}/{pageSize}")
+    public ResponseEntity<PageDTO> getAllByHabitAndDateBetween(
             @PathVariable("pageNumber")
             @Parameter(description = "номер запрашиваемой страницы")
             Integer pageNumber,
@@ -307,14 +308,14 @@ public class HabitRestController {
             @Parameter(description = "до даты")
             Date dateTo,
             @RequestBody
-            @Parameter(description = "ДТО пользователя")
-            UserDTO userDTO) {
+            @Parameter(description = "ДТО привычки")
+            HabitDTO habitDTO) {
 
-        PageDTO habitPageDTO;
+        PageDTO habitStatusPageDTO;
         try{
-            habitPageDTO = habitService
-                    .getAllByUserAndDateBetween(
-                            userDTO,
+            habitStatusPageDTO = habitStatusService
+                    .getAllByHabitAndDateBetween(
+                            habitDTO,
                             dateFrom,
                             dateTo,
                             pageNumber,
@@ -322,22 +323,22 @@ public class HabitRestController {
         } catch (RuntimeException e) {
             throw new AnyReasonException(e.getMessage());
         }
-        return new ResponseEntity<>(habitPageDTO, HttpStatus.OK);
+        return new ResponseEntity<>(habitStatusPageDTO, HttpStatus.OK);
     }
 
     /**
-     * Получить страницу из списка привычек пользователя с фильтром по периоду.
+     * Получить страницу из списка статусов привычки с фильтром по периоду.
      * @param pageNumber номер страницы.
      * @param pageSize размер страницы.
      * @param period Предопределенный период (Сегодня/Сутки/Неделя/Месяц)
-     * @param userDTO ДТО пользователя.
-     * @return страница привычек.
+     * @param habitDTO ДТО привычки.
+     * @return страница статусов привычки.
      */
     @Operation(
-            summary = "Получить страницу из списка привычек пользователя с фильтром по периоду."
+            summary = "Получить страницу из списка статусов привычки с фильтром по периоду."
     )
     @SecurityRequirement(name = "JWT")
-    @GetMapping("/user/date/period/{pageNumber}/{pageSize}")
+    @GetMapping("/habit/date/period/{pageNumber}/{pageSize}")
     public ResponseEntity<PageDTO> getAllByHabitAndDatePeriod(
             @PathVariable("pageNumber")
             @Parameter(description = "номер запрашиваемой страницы")
@@ -350,19 +351,19 @@ public class HabitRestController {
             Period period,
             @RequestBody
             @Parameter(description = "ДТО привычки")
-            UserDTO userDTO) {
+            HabitDTO habitDTO) {
 
-        PageDTO habitPageDTO;
+        PageDTO habitStatusPageDTO;
         try{
-            habitPageDTO = habitService
-                    .getAllByUserAndDatePeriod(
-                            userDTO,
+            habitStatusPageDTO = habitStatusService
+                    .getAllByHabitAndDatePeriod(
+                            habitDTO,
                             period,
                             pageNumber,
                             pageSize);
         } catch (RuntimeException e) {
             throw new AnyReasonException(e.getMessage());
         }
-        return new ResponseEntity<>(habitPageDTO, HttpStatus.OK);
+        return new ResponseEntity<>(habitStatusPageDTO, HttpStatus.OK);
     }
 }

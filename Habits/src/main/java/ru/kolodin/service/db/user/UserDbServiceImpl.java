@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.kolodin.model.auth.RegisterRequest;
 import ru.kolodin.model.exceptions.AnyReasonException;
+import ru.kolodin.model.exceptions.ResourceNotFoundException;
 import ru.kolodin.model.message.Message;
 import ru.kolodin.model.page.PageDTO;
 import ru.kolodin.model.users.User;
@@ -17,7 +18,7 @@ import ru.kolodin.service.db.PageService;
 import ru.kolodin.service.mapper.UserMapper;
 
 /**
- * Сервис пользователей.
+ * Сервис БД пользователей.
  */
 @Service
 @RequiredArgsConstructor
@@ -51,7 +52,7 @@ public class UserDbServiceImpl implements UserDbService {
      * @return запрашиваемая страница из списка пользователей с информационной частью о списке
      */
     @Override
-   public PageDTO findAll(Integer pageNumber, Integer pageSize){
+   public PageDTO findAll(Integer pageNumber, Integer pageSize) {
         Pageable pageable = pageService.getPageable(pageNumber, pageSize);
         Page<User> userResultPage;
         try {
@@ -60,6 +61,12 @@ public class UserDbServiceImpl implements UserDbService {
             throw new AnyReasonException("Что-то пошло не так: " + e.getMessage());
         }
         return userMapper.usersToPageDTO(userResultPage);
+    }
+
+    @Override
+    public User findById(Long userId) {
+        return usersRepository.findById(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found!"));
     }
 
     /**
@@ -109,6 +116,36 @@ public class UserDbServiceImpl implements UserDbService {
     }
 
     /**
+     * Изменение данных пользователя
+     * @param user пользователь
+     * @return сообщение о результате изменений данных
+     */
+    @Override
+    public Message update(User user) {
+        Message message = new Message();
+        try {
+            usersRepository.save(user);
+            message.setMessage("Данные пользователя успешно изменены");
+        } catch (ResourceNotFoundException e) {
+            message.setMessage("Ресурс временно недоступен. Зайдите позже.");
+        }
+        return message;
+    }
+
+    /**
+     * Удаление пользователя из базы данных
+     * @param userId ID пользователя
+     */
+    @Override
+    public void delete(Long userId) {
+        try {
+            usersRepository.deleteById(userId);
+        } catch (ResourceNotFoundException e) {
+            throw new ResourceNotFoundException("Ресурс временно недоступен. Зайдите позже.");
+        }
+    }
+
+    /**
      * Регистрация нового пользователя
      * @param user Новый пользователь
      * @return сообщение о результате регистрации
@@ -132,7 +169,7 @@ public class UserDbServiceImpl implements UserDbService {
         return message;
     }
 
-    /**
+        /**
      * Проверить наличие пользователя в БД
      * @param id ID пользователя
      * @return результат поиска

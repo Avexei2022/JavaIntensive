@@ -25,7 +25,7 @@ import ru.kolodin.repository.UsersRepository;
 public class AuthService {
 
     /**
-     * Репозиторий покупателей - пользователей веб-ресурса магазина.
+     * Репозиторий пользователей.
      */
     private final UsersRepository usersRepository;
 

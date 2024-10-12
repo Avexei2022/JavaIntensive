@@ -32,7 +32,7 @@ public class HabitMapper {
                 habit.getDescription(),
                 habit.getFrequency(),
                 userMapper.userToDTO(habit.getUser()),
-                habit.getCreationDate());
+                habit.getDate());
     }
 
     /**

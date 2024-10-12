@@ -1,7 +1,6 @@
 package ru.kolodin.service.db.habit;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -9,15 +8,13 @@ import ru.kolodin.model.exceptions.AnyReasonException;
 import ru.kolodin.model.exceptions.ObjectNotFoundException;
 import ru.kolodin.model.habits.Frequency;
 import ru.kolodin.model.habits.Habit;
-import ru.kolodin.model.habits.dto.HabitDTO;
-import ru.kolodin.model.users.User;
 import ru.kolodin.repository.HabitsRepository;
 import ru.kolodin.service.db.PageService;
 import ru.kolodin.service.db.user.UserDbService;
-import ru.kolodin.service.mapper.HabitMapper;
 
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
 
 /**
  * Сервис привычек.
@@ -107,6 +104,15 @@ public class HabitDbServiceImpl implements HabitDbService {
     }
 
     /**
+     * Получить список всех привычек.
+     * @return список привычек.
+     */
+    @Override
+    public List<Habit> getAll() {
+        return habitsRepository.findAll();
+    }
+
+    /**
      * Получить страницу из списка всех привычек пользователя.
      * @param userId ID пользователя.
      * @param pageNumber номер страницы.
@@ -114,9 +120,19 @@ public class HabitDbServiceImpl implements HabitDbService {
      * @return страница списка привычек пользователя.
      */
     @Override
-    public Page<Habit> getAllByUser(Long userId, int pageNumber, int pageSize) {
+    public Page<Habit> getAllByUserId(Long userId, int pageNumber, int pageSize) {
         Pageable pageable = pageService.getPageable(pageNumber, pageSize);
-        return habitsRepository.findAllByUser(userId, pageable);
+        return habitsRepository.findAllByUserId(userId, pageable);
+    }
+
+    /**
+     * Получить список всех привычек пользователя.
+     * @param email email пользователя.
+     * @return страница список привычек пользователя.
+     */
+    @Override
+    public List<Habit> getAllByUserEmail(String email) {
+        return habitsRepository.findAllByUserEmail(email);
     }
 
     /**
@@ -131,6 +147,23 @@ public class HabitDbServiceImpl implements HabitDbService {
     public Page<Habit> getAllByUserAndFrequency(Long userId, Frequency frequency, int pageNumber, int pageSize) {
         Pageable pageable = pageService.getPageable(pageNumber, pageSize);
         return habitsRepository.findAllByUserAndFrequency(userId, frequency, pageable);
+    }
+
+    /**
+     * Получить страницу из списка привычек пользователя с фильтром по дате создания.
+     * @param userId ID пользователя.
+     * @param dateFrom от даты включительно.
+     * @param dateTo до даты включительно.
+     * @param pageNumber номер страницы.
+     * @param pageSize размер страницы.
+     * @return страница статусов привычки.
+     */
+    @Override
+    public Page<Habit> getAllByUserAndDateBetween(
+            Long userId, Date dateFrom, Date dateTo, int pageNumber, int pageSize) {
+        Pageable pageable = pageService.getPageable(pageNumber, pageSize);
+        return habitsRepository.findAllByUserAndDateBetween(
+                userId, dateFrom, dateTo, pageable);
     }
 
     /**

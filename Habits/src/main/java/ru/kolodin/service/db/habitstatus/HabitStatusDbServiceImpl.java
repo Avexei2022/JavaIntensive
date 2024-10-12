@@ -1,17 +1,13 @@
 package ru.kolodin.service.db.habitstatus;
 
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.kolodin.model.exceptions.AnyReasonException;
 import ru.kolodin.model.exceptions.ObjectNotFoundException;
-import ru.kolodin.model.habits.Frequency;
-import ru.kolodin.model.habits.Habit;
 import ru.kolodin.model.habitstatus.HabitStatus;
 import ru.kolodin.model.habitstatus.Status;
-import ru.kolodin.model.users.User;
 import ru.kolodin.repository.HabitStatusesRepository;
 import ru.kolodin.service.db.PageService;
 import ru.kolodin.service.db.habit.HabitDbService;
@@ -19,7 +15,7 @@ import ru.kolodin.service.db.habit.HabitDbService;
 import java.util.Date;
 
 /**
- * Сервис истории привычек
+ * Сервис базы данных истории привычек
  */
 @Service
 @RequiredArgsConstructor
@@ -69,7 +65,7 @@ public class HabitStatusDbServiceImpl implements HabitStatusDbService {
     }
 
     /**
-     * Удалить статус привычку.
+     * Удалить статус привычки.
      * @param habitStatus статус привычки.
      */
     @Override
@@ -87,29 +83,29 @@ public class HabitStatusDbServiceImpl implements HabitStatusDbService {
 
     /**
      * Удалить все статусы конкретной привычки
-     * @param habit привычка
+     * @param habitID привычка
      */
     @Override
-    public void deleteAllByHabit(Habit habit) {
-        habitStatusRepository.deleteAllByHabitId(habit.getId());
+    public void deleteAllByHabit(Long habitID) {
+        habitStatusRepository.deleteAllByHabitId(habitID);
     }
 
     /**
      * Получить страницу из списка статусов привычки.
-     * @param habit привычка.
+     * @param habitId ID привычки.
      * @param pageNumber номер страницы.
      * @param pageSize размер страницы.
      * @return страница статусов привычки.
      */
     @Override
-    public Page<HabitStatus> getAllByHabit(Habit habit, int pageNumber, int pageSize) {
+    public Page<HabitStatus> getAllByHabit(Long habitId, int pageNumber, int pageSize) {
         Pageable pageable = pageService.getPageable(pageNumber, pageSize);
-        return habitStatusRepository.findAllByHabit(habit.getId(), pageable);
+        return habitStatusRepository.findAllByHabit(habitId, pageable);
     }
 
     /**
      * Получить страницу из списка статусов привычки с фильтром по статусу.
-     * @param habit привычка.
+     * @param habitId ID привычки.
      * @param status статус.
      * @param pageNumber номер страницы.
      * @param pageSize размер страницы.
@@ -117,14 +113,14 @@ public class HabitStatusDbServiceImpl implements HabitStatusDbService {
      */
     @Override
     public Page<HabitStatus> getAllByHabitAndStatus(
-            Habit habit, Status status, int pageNumber, int pageSize) {
+            Long habitId, Status status, int pageNumber, int pageSize) {
         Pageable pageable = pageService.getPageable(pageNumber, pageSize);
-        return habitStatusRepository.findAllByHabitAndStatus(habit.getId(), status, pageable);
+        return habitStatusRepository.findAllByHabitAndStatus(habitId, status, pageable);
     }
 
     /**
      * Получить страницу из списка статусов привычки с фильтром по дате.
-     * @param habit привычка.
+     * @param habitId ID привычки.
      * @param dateFrom от даты включительно.
      * @param dateTo до даты включительно.
      * @param pageNumber номер страницы.
@@ -133,10 +129,10 @@ public class HabitStatusDbServiceImpl implements HabitStatusDbService {
      */
     @Override
     public Page<HabitStatus> getAllByHabitAndDateBetween(
-            Habit habit, Date dateFrom, Date dateTo, int pageNumber, int pageSize) {
+            Long habitId, Date dateFrom, Date dateTo, int pageNumber, int pageSize) {
         Pageable pageable = pageService.getPageable(pageNumber, pageSize);
         return habitStatusRepository.findAllByHabitAndDateBetween(
-                habit.getId(), dateFrom, dateTo, pageable);
+                habitId, dateFrom, dateTo, pageable);
     }
 
     /**

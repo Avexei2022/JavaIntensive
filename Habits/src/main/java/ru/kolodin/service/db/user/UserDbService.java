@@ -6,9 +6,10 @@ import ru.kolodin.model.users.User;
 import ru.kolodin.model.users.dto.UserDTO;
 
 /**
- * Сервис пользователей.
+ * Сервис БД пользователей.
  */
 public interface UserDbService {
+
 
     /**
      * Получить страницу из списка всех пользователей
@@ -17,6 +18,13 @@ public interface UserDbService {
      * @return запрашиваемая страница из списка пользователей с информационной частью о списке
      */
     PageDTO findAll(Integer pageNumber, Integer pageSize);
+
+    /**
+     * Получить пользователя по ID
+     * @param userId - ID пользователя
+     * @return пользователь
+     */
+    User findById(Long userId);
 
     /**
      * Получить пользователя по имени
@@ -45,6 +53,19 @@ public interface UserDbService {
      * @return DTO пользователя
      */
     UserDTO findDTOByEmail(String email);
+
+    /**
+     * Изменение данных пользователя
+     * @param user пользователь
+     * @return сообщение о результате изменений данных
+     */
+    Message update(User user);
+
+    /**
+     * Удаление пользователя из базы данных
+     * @param userId ID пользователя
+     */
+    void delete(Long userId);
 
     /**
      * Регистрация нового пользователя

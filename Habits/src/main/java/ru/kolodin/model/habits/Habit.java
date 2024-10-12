@@ -57,6 +57,6 @@ public class Habit {
      * Дата создания привычки
      */
     @Temporal(TemporalType.DATE)
-    @Column(name = "creationDate")
-    private Date creationDate;
+    @Column(name = "date")
+    private Date date;
 }
