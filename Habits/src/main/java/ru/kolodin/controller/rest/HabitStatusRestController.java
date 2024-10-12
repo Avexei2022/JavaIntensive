@@ -51,7 +51,7 @@ public class HabitStatusRestController {
             summary = "Добавить статус привычки в базу данных"
     )
     @SecurityRequirement(name = "JWT")
-    @PostMapping("/add")
+    @PostMapping("/")
     public ResponseEntity<Message> add(
             @RequestBody
             @Parameter(description = "ДТО статуса привычки")
@@ -75,7 +75,7 @@ public class HabitStatusRestController {
             summary = "Изменить статус привычки в базе данных"
     )
     @SecurityRequirement(name = "JWT")
-    @PutMapping("/update")
+    @PutMapping("/")
     public ResponseEntity<Message> update(
             @RequestBody
             @Parameter(description = "ДТО статуса привычки")

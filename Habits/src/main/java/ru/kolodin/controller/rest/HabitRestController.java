@@ -50,7 +50,7 @@ public class HabitRestController {
             summary = "Добавить привычку в базу данных"
     )
     @SecurityRequirement(name = "JWT")
-    @PostMapping("/add")
+    @PostMapping("/")
     public ResponseEntity<Message> add(
             @RequestBody
             @Parameter(description = "ДТО привычки")
@@ -74,7 +74,7 @@ public class HabitRestController {
             summary = "Изменить привычку в базе данных"
     )
     @SecurityRequirement(name = "JWT")
-    @PutMapping("/update")
+    @PutMapping("/")
     public ResponseEntity<Message> update(
             @RequestBody
             @Parameter(description = "ДТО привычки")
@@ -145,7 +145,7 @@ public class HabitRestController {
             summary = "Удалить привычку"
     )
     @SecurityRequirement(name = "JWT")
-    @DeleteMapping("/habit")
+    @DeleteMapping("/")
     public ResponseEntity<Message> delete(
             @RequestBody
             @Parameter(description = "ДТО привычки")
