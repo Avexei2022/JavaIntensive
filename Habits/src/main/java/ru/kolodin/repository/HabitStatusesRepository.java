@@ -8,6 +8,7 @@ import ru.kolodin.model.habitstatus.HabitStatus;
 import ru.kolodin.model.habitstatus.Status;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Репозиторий статуса привычек.
@@ -47,4 +48,14 @@ public interface HabitStatusesRepository extends JpaRepository<HabitStatus, Long
      * @return страница из списка статусов привычки.
      */
     Page<HabitStatus> findAllByHabitAndDateBetween(Long id, Date dateFrom, Date dateTo, Pageable pageable);
+
+    /**
+     * Получить страницу из списка статусов привычки с фильтром по периоду дат.
+     * @param id ID привычки.
+     * @param dateFrom от даты.
+     * @param dateTo до даты.
+     * @return страница из списка статусов привычки.
+     */
+    List<HabitStatus> findAllByHabitIdAndDateBetween(Long id, Date dateFrom, Date dateTo);
+
 }

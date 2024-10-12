@@ -7,7 +7,6 @@ import ru.kolodin.model.page.PageInfo;
 import ru.kolodin.model.users.User;
 import ru.kolodin.model.users.dto.UserCreationDTO;
 import ru.kolodin.model.users.dto.UserDTO;
-import ru.kolodin.model.users.dto.UserUpdateDTO;
 
 import java.util.List;
 

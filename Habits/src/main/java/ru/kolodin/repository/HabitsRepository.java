@@ -6,8 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.kolodin.model.habits.Frequency;
 import ru.kolodin.model.habits.Habit;
-import ru.kolodin.model.habitstatus.HabitStatus;
-
 import java.util.Date;
 import java.util.List;
 

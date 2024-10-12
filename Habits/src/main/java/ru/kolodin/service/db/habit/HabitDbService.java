@@ -3,8 +3,6 @@ package ru.kolodin.service.db.habit;
 import org.springframework.data.domain.Page;
 import ru.kolodin.model.habits.Frequency;
 import ru.kolodin.model.habits.Habit;
-import ru.kolodin.model.habitstatus.HabitStatus;
-import ru.kolodin.model.users.User;
 
 import java.util.Date;
 import java.util.List;

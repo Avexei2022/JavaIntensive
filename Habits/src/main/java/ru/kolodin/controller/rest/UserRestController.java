@@ -107,6 +107,9 @@ public class UserRestController {
      * @param userDTO ДТО пользователя
      * @return сообщение о результате
      */
+    @Operation(
+            summary = "Заблокировать пользователя."
+    )
     @PatchMapping("/block")
     public ResponseEntity<Message> blockUser(
             @RequestBody
@@ -127,6 +130,9 @@ public class UserRestController {
      * @param userDTO ДТО пользователя
      * @return сообщение о результате
      */
+    @Operation(
+            summary = "Разблокировать пользователя."
+    )
     @PatchMapping("/unblock")
     public ResponseEntity<Message> unblockUser(
             @RequestBody
@@ -147,6 +153,9 @@ public class UserRestController {
      * @param userDTO ДТО пользователя
      * @return сообщение о результате
      */
+    @Operation(
+            summary = "Изменить роль пользователя."
+    )
     @PatchMapping("/role")
     public ResponseEntity<Message> setRole(
             @RequestBody

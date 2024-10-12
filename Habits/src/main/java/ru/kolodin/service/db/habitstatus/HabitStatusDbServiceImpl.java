@@ -13,6 +13,7 @@ import ru.kolodin.service.db.PageService;
 import ru.kolodin.service.db.habit.HabitDbService;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Сервис базы данных истории привычек
@@ -133,6 +134,20 @@ public class HabitStatusDbServiceImpl implements HabitStatusDbService {
         Pageable pageable = pageService.getPageable(pageNumber, pageSize);
         return habitStatusRepository.findAllByHabitAndDateBetween(
                 habitId, dateFrom, dateTo, pageable);
+    }
+
+    /**
+     * Получить полный список статусов привычки с фильтром по дате.
+     * @param habitId ID привычки.
+     * @param dateFrom от даты включительно.
+     * @param dateTo до даты включительно.
+     * @return страница статусов привычки.
+     */
+    @Override
+    public List<HabitStatus> getAllByHabitIdAndDateBetween(
+            Long habitId, Date dateFrom, Date dateTo) {
+        return habitStatusRepository.findAllByHabitIdAndDateBetween(
+                habitId, dateFrom, dateTo);
     }
 
     /**

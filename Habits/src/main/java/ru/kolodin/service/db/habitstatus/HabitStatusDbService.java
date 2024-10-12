@@ -5,6 +5,7 @@ import ru.kolodin.model.habitstatus.HabitStatus;
 import ru.kolodin.model.habitstatus.Status;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Сервис базы данных истории привычек
@@ -78,6 +79,16 @@ public interface HabitStatusDbService {
      */
     Page<HabitStatus> getAllByHabitAndDateBetween(
             Long habitId, Date dateFrom, Date dateTo, int pageNumber, int pageSize);
+
+    /**
+     * Получить полный список статусов привычки с фильтром по дате.
+     * @param habitId ID привычки.
+     * @param dateFrom от даты включительно.
+     * @param dateTo до даты включительно.
+     * @return страница статусов привычки.
+     */
+    List<HabitStatus> getAllByHabitIdAndDateBetween(
+            Long habitId, Date dateFrom, Date dateTo);
 
     /**
      * Проверить наличие статуса привычки в БД
