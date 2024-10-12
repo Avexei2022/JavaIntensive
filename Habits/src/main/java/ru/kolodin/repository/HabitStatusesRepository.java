@@ -19,7 +19,7 @@ public interface HabitStatusesRepository extends JpaRepository<HabitStatus, Long
      * Удалить все статусы конкретной привычки.
      * @param id ID привычки.
      */
-    void deleteAllByHabit(Long id);
+    void deleteAllByHabitId(Long id);
 
     /**
      * Получить страницу из списка статусов привычки.

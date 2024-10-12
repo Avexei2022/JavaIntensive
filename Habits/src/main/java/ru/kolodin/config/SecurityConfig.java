@@ -38,49 +38,6 @@ public class SecurityConfig {
      */
     private final AuthenticationProvider authenticationProvider;
 
-    private final UserDbService userDbService;
-
-    /**
-     * Сервис учетных записей.
-     * @return учетная запись.
-     */
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return userDbService::findByEmail;
-    }
-
-    /**
-     * Обработчик аутентификации.
-     * @return обработчик.
-     */
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
-
-    /**
-     * Кодировщик пароля.
-     * @return экземпляр кодировщика.
-     */
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    /**
-     * Менеджер аутентификации.
-     * @param config конфигурация проверки подлинности.
-     * @return экземпляр менеджера аутентификации.
-     * @throws Exception исключение.
-     */
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();
-    }
-
     /**
      * Правила фильтрации.
      * @param http защищенный http запрос.

@@ -32,7 +32,7 @@ public class HabitStatus {
      * Привычка
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "habit_id")
+    @JoinColumn(name = "habitId")
     private Habit habit;
 
     /**

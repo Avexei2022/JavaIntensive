@@ -17,7 +17,7 @@ public interface HabitsRepository extends JpaRepository<Habit, Long> {
      * Удалить все привычки пользователя.
      * @param id ID пользователя.
      */
-    void deleteAllByUser(Long id);
+    void deleteAllByUserId(Long id);
 
     /**
      * Получить страницу из списка привычек пользователя.

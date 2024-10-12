@@ -50,13 +50,13 @@ public class Habit {
      * Пользователь/обладатель привычки
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userId")
     private User user;
 
     /**
      * Дата создания привычки
      */
     @Temporal(TemporalType.DATE)
-    @Column(name = "creation_date")
+    @Column(name = "creationDate")
     private Date creationDate;
 }

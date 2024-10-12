@@ -6,4 +6,19 @@ server:
 spring:
   application:
     name: Habits
+    jpa:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        ddl-auto: update
+      show-sql: true
+
+#AUTHENTICATE
+auth-data:
+  #  Логин и пароль сервиса
+  username: admin
+  email: admin@tms.ru
+  password: $2a$12$yUkXCvpJ.2wcrX2kkIrBXeCTJTAsra4ynFvyNGIF90yVHCmtMRQhe
+
 

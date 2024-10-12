@@ -2,6 +2,7 @@ package ru.kolodin.service.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Component;
 import ru.kolodin.model.habits.Habit;
 import ru.kolodin.model.habits.dto.HabitDTO;
 import ru.kolodin.model.page.PageDTO;
@@ -13,6 +14,7 @@ import java.util.List;
 /**
  * Конвертер привычек.
  */
+@Component
 @RequiredArgsConstructor
 public class HabitMapper {
 

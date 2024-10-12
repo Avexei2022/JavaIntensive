@@ -91,7 +91,7 @@ public class HabitDbServiceImpl implements HabitDbService {
      */
     @Override
     public void deleteAllByUser(Long id) {
-        habitsRepository.deleteAllByUser(id);
+        habitsRepository.deleteAllByUserId(id);
     }
 
     /**

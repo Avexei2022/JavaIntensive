@@ -2,6 +2,7 @@ package ru.kolodin.service.mapper;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Component;
 import ru.kolodin.model.page.PageDTO;
 import ru.kolodin.model.page.PageInfo;
 import ru.kolodin.model.habitstatus.HabitStatus;
@@ -14,6 +15,7 @@ import java.util.List;
 /**
  * Конвертер статуса привычек.
  */
+@Component
 @RequiredArgsConstructor
 public class HabitStatusMapper {
 

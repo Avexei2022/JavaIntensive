@@ -91,7 +91,7 @@ public class HabitStatusDbServiceImpl implements HabitStatusDbService {
      */
     @Override
     public void deleteAllByHabit(Habit habit) {
-        habitStatusRepository.deleteAllByHabit(habit.getId());
+        habitStatusRepository.deleteAllByHabitId(habit.getId());
     }
 
     /**

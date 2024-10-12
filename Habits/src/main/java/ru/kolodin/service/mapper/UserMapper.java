@@ -13,6 +13,7 @@ import java.util.List;
 /**
  * Конвертер пользователей
  */
+@Component
 public class UserMapper {
 
     /**

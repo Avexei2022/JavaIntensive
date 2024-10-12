@@ -32,6 +32,8 @@
         <jjwt-impl.version>0.12.5</jjwt-impl.version>
         <jjwt-jackson.version>0.12.5</jjwt-jackson.version>
         <openapi.version>2.5.0</openapi.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <javadoc.version>3.6.3</javadoc.version>
     </properties>
     <dependencies>
         <dependency>
