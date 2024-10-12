@@ -1,8 +1,11 @@
 package ru.kolodin.controller.rest;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,7 @@ import ru.kolodin.service.db.user.UserDbService;
 /**
  * REST Контроллер пользователей
  */
+@Tag(name = "Контроллер пользователей", description = "CRUD пользователей")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
@@ -34,11 +38,18 @@ public class UserRestController {
      * @param pageSize размер страницы
      * @return страница пользователей
      */
+    @Operation(
+            summary = "Получить список всех пользователей"
+    )
     @SecurityRequirement(name = "JWT")
     @GetMapping("/getAllUsers/{pageNumber}/{pageSize}")
     public ResponseEntity<PageDTO> getAllUsers(
-            @PathVariable("pageNumber") Integer pageNumber,
-            @PathVariable("pageSize") Integer pageSize) {
+            @PathVariable("pageNumber")
+            @Parameter(description = "номер запрашиваемой страницы")
+            Integer pageNumber,
+            @PathVariable("pageSize")
+            @Parameter(description = "размер страницы / количество объектов")
+            Integer pageSize) {
         PageDTO usersPageDTO;
         try {
             usersPageDTO = userDbService.findAll(pageNumber, pageSize);

@@ -1,7 +1,9 @@
 package ru.kolodin.controller.rest;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -16,6 +18,7 @@ import java.time.LocalDateTime;
 /**
  * REST-Контроллер обработки исключений.
  */
+@Tag(name = "Контроллер обработки исключений", description = "Обработчик исключений")
 @RestControllerAdvice
 @SecurityScheme(  name = "JWT",
         type = SecuritySchemeType.HTTP,
@@ -28,6 +31,9 @@ public class ExceptionController {
      * @param e объект исключения.
      * @return тело/обертка исключения.
      */
+    @Operation(
+            summary = "Исключение при отсутствии пользователя в базе данных"
+    )
     @ExceptionHandler(ObjectNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ExceptionBody UserNotFound(ObjectNotFoundException e){
@@ -42,6 +48,9 @@ public class ExceptionController {
      * @param e объект исключения.
      * @return тело/обертка исключения.
      */
+    @Operation(
+            summary = "Исключение при отсутствии доступа к ресурсу"
+    )
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
     public ExceptionBody resourceNotFound(ResourceNotFoundException e){

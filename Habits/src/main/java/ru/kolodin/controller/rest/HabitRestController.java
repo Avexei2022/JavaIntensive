@@ -1,8 +1,11 @@
 package ru.kolodin.controller.rest;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
@@ -20,8 +23,9 @@ import ru.kolodin.service.HabitService;
 
 /**
  * REST Контроллер привычек.
- * Сваггер http://localhost:8081/swagger-ui/index.html
+ * Сваггер http://localhost:8082/swagger-ui/index.html
  */
+@Tag(name = "Контроллер привычек", description = "CRUD привычек")
 @Log
 @RestController
 @RequiredArgsConstructor
@@ -39,9 +43,15 @@ public class HabitRestController {
      * @param habitDTO ДТО привычки
      * @return сообщение о результате со статусом
      */
+    @Operation(
+            summary = "Добавить привычку в базу данных"
+    )
     @SecurityRequirement(name = "JWT")
     @PostMapping("/add")
-    public ResponseEntity<Message> add(@RequestBody HabitDTO habitDTO) {
+    public ResponseEntity<Message> add(
+            @RequestBody
+            @Parameter(description = "ДТО привычки")
+            HabitDTO habitDTO) {
         Message message = new Message();
         try {
             habitService.add(habitDTO);
@@ -57,9 +67,15 @@ public class HabitRestController {
      * @param habitDTO ДТО привычки
      * @return сообщение о результате со статусом
      */
+    @Operation(
+            summary = "Изменить привычку в базе данных"
+    )
     @SecurityRequirement(name = "JWT")
     @PutMapping("/update")
-    public ResponseEntity<Message> update(@RequestBody HabitDTO habitDTO) {
+    public ResponseEntity<Message> update(
+            @RequestBody
+            @Parameter(description = "ДТО привычки")
+            HabitDTO habitDTO) {
         Message message = new Message();
         try {
             habitService.update(habitDTO);
@@ -75,10 +91,15 @@ public class HabitRestController {
      * @param id ID привычки.
      * @return привычка.
      */
+    @Operation(
+            summary = "Получить привычку по Id"
+    )
     @SecurityRequirement(name = "JWT")
     @GetMapping("/{id}")
     public ResponseEntity<HabitDTO> getById(
-            @PathVariable("id") Long id) {
+            @PathVariable("id")
+            @Parameter(description = "ID привычки")
+            Long id) {
         HabitDTO habitDTO;
         try {
             habitDTO = habitService.getById(id);
@@ -93,10 +114,15 @@ public class HabitRestController {
      * @param id ID привычки.
      * @return сообщение о результате удаления привычки.
      */
+    @Operation(
+            summary = "Удалить привычку по Id"
+    )
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/{id}")
     public ResponseEntity<Message> deleteById(
-            @PathVariable("id") Long id) {
+            @PathVariable("id")
+            @Parameter(description = "ID привычки")
+            Long id) {
         Message message = new Message();
         try {
             habitService.deleteById(id);
@@ -112,10 +138,15 @@ public class HabitRestController {
      * @param habitDTO ДТО привычки.
      * @return сообщение о результатах удаления привычки.
      */
+    @Operation(
+            summary = "Удалить привычку"
+    )
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/habit")
     public ResponseEntity<Message> delete(
-            @RequestBody HabitDTO habitDTO) {
+            @RequestBody
+            @Parameter(description = "ДТО привычки")
+            HabitDTO habitDTO) {
         Message message = new Message();
         try {
             habitService.delete(habitDTO);
@@ -130,6 +161,9 @@ public class HabitRestController {
      * Удалить все привычки.
      * @return сообщение о результате удаления привычек.
      */
+    @Operation(
+            summary = "Удалить все привычки"
+    )
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/all")
     public ResponseEntity<Message> deleteAll() {
@@ -148,10 +182,15 @@ public class HabitRestController {
      * @param userDTO ДТО пользователя.
      * @return сообщение о результатах удаления привычки.
      */
+    @Operation(
+            summary = "Удалить все привычки пользователя"
+    )
     @SecurityRequirement(name = "JWT")
     @DeleteMapping("/user")
     public ResponseEntity<Message> deleteByUser(
-            @RequestBody UserDTO userDTO) {
+            @RequestBody
+            @Parameter(description = "ДТО пользователя")
+            UserDTO userDTO) {
         Message message = new Message();
         try {
             habitService.deleteByUser(userDTO);
@@ -169,12 +208,21 @@ public class HabitRestController {
      * @param userDTO ДТО пользователя.
      * @return страница привычек пользователя.
      */
+    @Operation(
+            summary = "Получить страницу из списка привычек с фильтром по пользователю"
+    )
     @SecurityRequirement(name = "JWT")
     @GetMapping("/user/{pageNumber}/{pageSize}")
     public ResponseEntity<PageDTO> getAllByUser(
-            @PathVariable("pageNumber") Integer pageNumber,
-            @PathVariable("pageSize") Integer pageSize,
-            @RequestBody UserDTO userDTO) {
+            @PathVariable("pageNumber")
+            @Parameter(description = "номер запрашиваемой страницы")
+            Integer pageNumber,
+            @PathVariable("pageSize")
+            @Parameter(description = "размер страницы / количество объектов")
+            Integer pageSize,
+            @RequestBody
+            @Parameter(description = "ДТО пользователя")
+            UserDTO userDTO) {
 
         PageDTO habitsPageDTO;
         try{
@@ -196,13 +244,24 @@ public class HabitRestController {
      * @param frequency периодичность.
      * @return страница привычек пользователя.
      */
+    @Operation(
+            summary = "Получить страницу из списка привычек с фильтром по пользователю"
+    )
     @SecurityRequirement(name = "JWT")
     @GetMapping("/frequency/{pageNumber}/{pageSize}")
     public ResponseEntity<PageDTO> getAllByUserAndFrequency(
-            @PathVariable("pageNumber") Integer pageNumber,
-            @PathVariable("pageSize") Integer pageSize,
-            @RequestBody UserDTO userDTO,
-            @RequestBody Frequency frequency) {
+            @PathVariable("pageNumber")
+            @Parameter(description = "номер запрашиваемой страницы")
+            Integer pageNumber,
+            @PathVariable("pageSize")
+            @Parameter(description = "размер страницы / количество объектов")
+            Integer pageSize,
+            @RequestBody
+            @Parameter(description = "ДТО привычки")
+            UserDTO userDTO,
+            @RequestBody
+            @Parameter(description = "периодичность привычки")
+            Frequency frequency) {
 
         PageDTO habitsPageDTO;
         try{

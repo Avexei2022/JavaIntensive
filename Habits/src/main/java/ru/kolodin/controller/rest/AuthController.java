@@ -1,5 +1,8 @@
 package ru.kolodin.controller.rest;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,8 +16,9 @@ import ru.kolodin.service.auth.AuthService;
 
 /**
  * REST-контроллер регистрации и аутентификации
- * * Сваггер http://localhost:8081/swagger-ui/index.html
+ * * Сваггер http://localhost:8082/swagger-ui/index.html
  */
+@Tag(name = "Контроллер аутентификации", description = "Регистрация и аутентификация пользователей")
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -30,8 +34,14 @@ public class AuthController {
      * @param request данные запроса на регистрацию.
      * @return аутентификация.
      */
+    @Operation(
+            summary = "Регистрация нового пользователя"
+    )
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<AuthResponse> register(
+            @RequestBody
+            @Parameter(description = "Запрос на регистрацию с данными пользователя")
+            RegisterRequest request) {
         return ResponseEntity.ok(authService.userRegister(request));
     }
 
@@ -40,8 +50,14 @@ public class AuthController {
      * @param request запрос на аутентификацию.
      * @return токен.
      */
+    @Operation(
+            summary = "Аутентификация пользователя"
+    )
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthResponse> authenticate(@RequestBody AuthRequest request) {
+    public ResponseEntity<AuthResponse> authenticate(
+            @RequestBody
+            @Parameter(description = "Запрос аутентификации с данными пользователя")
+            AuthRequest request) {
         return ResponseEntity.ok(authService.authenticate(request));
     }
 }
