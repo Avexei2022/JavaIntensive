@@ -12,8 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kolodin.model.enums.Period;
-import ru.kolodin.model.message.Message;
-import ru.kolodin.model.statistic.Percentage;
+import ru.kolodin.model.habits.Frequency;
+import ru.kolodin.model.statistic.ReportCompletedForPeriod;
+import ru.kolodin.model.statistic.ReportDailyOrWeeklyProgress;
 import ru.kolodin.model.users.dto.UserDTO;
 import ru.kolodin.service.statistics.StatisticService;
 
@@ -34,24 +35,46 @@ public class StatisticRestController {
     private final StatisticService statisticService;
 
     /**
-     * Получить процент выполнения привычек за период.
+     * Получить отчет о количестве и проценте выполнения привычек за определенный в запросе период.
      * @param userDTO DTO пользователя.
      * @param period Период.
      * @return результат.
      */
     @Operation(
-            summary = "Получить процент выполнения привычек за период"
+            summary = "Получить отчет о количестве и проценте выполнения привычек за определенный в запросе период."
     )
     @SecurityRequirement(name = "JWT")
-    @GetMapping("/percentage")
-    public ResponseEntity<Percentage> getPercentage(
+    @PostMapping("/percentage")
+    public ResponseEntity<ReportCompletedForPeriod> getPercentage(
             @RequestBody
             @Parameter(description = "ДТО пользователя")
             UserDTO userDTO,
             @RequestBody
             @Parameter(description = "Период")
             Period period) {
-        Percentage percentage = statisticService.getPercentage(userDTO, period);
+        ReportCompletedForPeriod percentage = statisticService.getReportCompletedForPeriod(userDTO, period);
         return new ResponseEntity<>(percentage, HttpStatus.OK);
+    }
+
+    /**
+     * Получить отчет о прогрессе выполнения ежедневных/еженедельных привычек
+     * @param userDTO DTO пользователя.
+     * @param frequency Периодичность привычки.
+     * @return результат.
+     */
+    @Operation(
+            summary = "Получить отчет о прогрессе выполнения ежедневных/еженедельных привычек"
+    )
+    @SecurityRequirement(name = "JWT")
+    @PostMapping("/progress")
+    public ResponseEntity<ReportDailyOrWeeklyProgress> getProgress(
+            @RequestBody
+            @Parameter(description = "ДТО пользователя")
+            UserDTO userDTO,
+            @RequestBody
+            @Parameter(description = "Периодичность")
+            Frequency frequency) {
+        ReportDailyOrWeeklyProgress progress = statisticService.getReportDailyOrWeeklyProgress(userDTO, frequency);
+        return new ResponseEntity<>(progress, HttpStatus.OK);
     }
 }
