@@ -6,6 +6,7 @@ import ru.kolodin.model.enums.Period;
 import ru.kolodin.model.habits.Habit;
 import ru.kolodin.model.habitstatus.HabitStatus;
 import ru.kolodin.model.habitstatus.Status;
+import ru.kolodin.model.statistic.Percentage;
 import ru.kolodin.model.users.dto.UserDTO;
 import ru.kolodin.service.calendar.CalendarService;
 import ru.kolodin.service.db.habit.HabitDbService;
@@ -22,7 +23,7 @@ public class StatisticService {
     private final HabitStatusDbService habitStatusDbService;
     private final CalendarService calendarService;
 
-    public Integer getPercentage(UserDTO userDTO, Period period) {
+    public Percentage getPercentage(UserDTO userDTO, Period period) {
         Date dateTo = new Date();
         Date dateFrom = calendarService.getOffsetDateBefore(period);
         List<Habit> habits = habitDbService.getAllByUserEmail(userDTO.getEmail());
@@ -33,7 +34,11 @@ public class StatisticService {
         Integer total = habitStatuses.size();
         Integer completed = habitStatuses.stream()
                 .filter(habitStatus -> habitStatus.getStatus().equals(Status.COMPLETED)).toList().size();
-
-        return (completed / total) * 100;
+        Integer percent = (completed / total) * 100;
+        return new Percentage(
+                userDTO.getId(), period, total, completed, percent
+        );
     }
+
+
 }

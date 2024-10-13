@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kolodin.model.enums.Period;
 import ru.kolodin.model.message.Message;
+import ru.kolodin.model.statistic.Percentage;
 import ru.kolodin.model.users.dto.UserDTO;
 import ru.kolodin.service.statistics.StatisticService;
 
@@ -43,15 +44,14 @@ public class StatisticRestController {
     )
     @SecurityRequirement(name = "JWT")
     @GetMapping("/percentage")
-    public ResponseEntity<Message> getPercentage(
+    public ResponseEntity<Percentage> getPercentage(
             @RequestBody
-            @Parameter(description = "ДТО привычки")
+            @Parameter(description = "ДТО пользователя")
             UserDTO userDTO,
             @RequestBody
             @Parameter(description = "Период")
             Period period) {
-        Message message = new Message();
-        message.setMessage(statisticService.getPercentage(userDTO, period).toString());
-        return new ResponseEntity<>(message, HttpStatus.OK);
+        Percentage percentage = statisticService.getPercentage(userDTO, period);
+        return new ResponseEntity<>(percentage, HttpStatus.OK);
     }
 }
