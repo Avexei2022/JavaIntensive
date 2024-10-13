@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.kolodin.model.enums.Period;
 import ru.kolodin.model.habits.Frequency;
 import ru.kolodin.model.statistic.ReportCompletedForPeriod;
+import ru.kolodin.model.statistic.ReportDailyAndWeeklyUncompleted;
 import ru.kolodin.model.statistic.ReportDailyOrWeeklyProgress;
 import ru.kolodin.model.users.dto.UserDTO;
 import ru.kolodin.service.statistics.StatisticService;
@@ -76,5 +77,23 @@ public class StatisticRestController {
             Frequency frequency) {
         ReportDailyOrWeeklyProgress progress = statisticService.getReportDailyOrWeeklyProgress(userDTO, frequency);
         return new ResponseEntity<>(progress, HttpStatus.OK);
+    }
+
+    /**
+     * Получить отчет о количестве текущих серий выполнения привычек
+     * @param userDTO DTO пользователя.
+     * @return результат.
+     */
+    @Operation(
+            summary = "Получить отчет о количестве текущих серий выполнения привычек"
+    )
+    @SecurityRequirement(name = "JWT")
+    @PostMapping("/current")
+    public ResponseEntity<ReportDailyAndWeeklyUncompleted> getProgress(
+            @RequestBody
+            @Parameter(description = "ДТО пользователя")
+            UserDTO userDTO) {
+        ReportDailyAndWeeklyUncompleted current = statisticService.getReportDailyAndWeeklyUncompleted(userDTO);
+        return new ResponseEntity<>(current, HttpStatus.OK);
     }
 }

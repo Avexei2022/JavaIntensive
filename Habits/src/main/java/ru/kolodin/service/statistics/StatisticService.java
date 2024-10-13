@@ -9,6 +9,7 @@ import ru.kolodin.model.habits.Habit;
 import ru.kolodin.model.habitstatus.HabitStatus;
 import ru.kolodin.model.habitstatus.Status;
 import ru.kolodin.model.statistic.ReportCompletedForPeriod;
+import ru.kolodin.model.statistic.ReportDailyAndWeeklyUncompleted;
 import ru.kolodin.model.statistic.ReportDailyOrWeeklyProgress;
 import ru.kolodin.model.users.dto.UserDTO;
 import ru.kolodin.service.calendar.CalendarService;
@@ -67,10 +68,37 @@ public class StatisticService {
     }
 
     /**
+     * Получить отчет о количестве текущих серий выполнения привычек
+     * @param userDTO ДТО пользователя.
+     * @return отчет о количестве текущих серий выполнения привычек
+     */
+    @Schema(description = "Получить отчет о количестве текущих серий выполнения привычек")
+    public ReportDailyAndWeeklyUncompleted getReportDailyAndWeeklyUncompleted(UserDTO userDTO) {
+        List<HabitStatus> habitStatusesDaily = getHabitStatuses(userDTO, Period.NOW)
+                .stream()
+                .filter(habitStatus -> habitStatus.getHabit().getFrequency().equals(Frequency.DAILY))
+                .toList();
+        List<HabitStatus> habitStatusesWeekly = getHabitStatuses(userDTO, Period.WEEK)
+                .stream()
+                .filter(habitStatus -> habitStatus.getHabit().getFrequency().equals(Frequency.WEEKLY))
+                .toList();
+        Integer totalDaily = habitStatusesDaily.size();
+        Integer uncompletedDaily = habitStatusesDaily.stream()
+                .filter(habitStatus -> habitStatus.getStatus().equals(Status.WAITING))
+                .toList().size();
+        Integer totalWeekly = habitStatusesWeekly.size();
+        Integer uncompletedWeekly = habitStatusesWeekly.stream()
+                .filter(habitStatus -> habitStatus.getStatus().equals(Status.WAITING))
+                .toList().size();
+        return new ReportDailyAndWeeklyUncompleted(
+                userDTO, totalDaily, totalWeekly, uncompletedDaily, uncompletedWeekly);
+    }
+
+    /**
      * Получить список статусов привычек за определенный в запросе период
-     * @param userDTO
-     * @param period
-     * @return
+     * @param userDTO ДТО пользователя
+     * @param period период для расчета
+     * @return список статусов привычек
      */
     private List<HabitStatus> getHabitStatuses(UserDTO userDTO, Period period) {
         List<Habit> habits = habitDbService.getAllByUserEmail(userDTO.getEmail());
