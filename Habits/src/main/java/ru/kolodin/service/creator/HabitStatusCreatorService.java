@@ -3,7 +3,6 @@ package ru.kolodin.service.creator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import ru.kolodin.model.enums.Period;
 import ru.kolodin.model.habits.Frequency;
 import ru.kolodin.model.habits.Habit;
 import ru.kolodin.model.habitstatus.HabitStatus;
@@ -11,7 +10,6 @@ import ru.kolodin.model.habitstatus.Status;
 import ru.kolodin.service.calendar.CalendarService;
 import ru.kolodin.service.db.habit.HabitDbService;
 import ru.kolodin.service.db.habitstatus.HabitStatusDbService;
-import ru.kolodin.service.db.user.UserDbService;
 
 import java.util.Date;
 import java.util.List;
