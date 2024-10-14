@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.kolodin.model.exceptions.AnyReasonException;
 import ru.kolodin.model.exceptions.ObjectNotFoundException;
+import ru.kolodin.model.habits.Habit;
 import ru.kolodin.model.habitstatus.HabitStatus;
 import ru.kolodin.model.habitstatus.Status;
 import ru.kolodin.repository.HabitStatusesRepository;
@@ -158,5 +159,28 @@ public class HabitStatusDbServiceImpl implements HabitStatusDbService {
     @Override
     public Boolean isExists(Long id) {
         return habitStatusRepository.existsById(id);
+    }
+
+    /**
+     * Проверить наличие статуса привычки в БД на конкретную дату
+     * @param habit Привычка
+     * @param date Дата
+     * @return результат поиска
+     */
+    @Override
+    public Boolean isExistsByHabitAndDate(Habit habit, Date date) {
+        return habitStatusRepository.existsByHabitIdAndDate(habit.getId(), date);
+    }
+
+    /**
+     * Проверить наличие статуса привычки в БД в определенный период
+     * @param habit Привычка
+     * @param dateFrom от даты включительно.
+     * @param dateTo до даты включительно.
+     * @return результат поиска
+     */
+    @Override
+    public Boolean isExistsByHabitAndDateBetween(Habit habit, Date dateFrom, Date dateTo) {
+        return habitStatusRepository.existsByHabitIdAndDateBetween(habit.getId(), dateFrom, dateTo);
     }
 }

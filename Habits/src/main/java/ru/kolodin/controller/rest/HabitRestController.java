@@ -19,7 +19,7 @@ import ru.kolodin.model.habits.dto.HabitDTO;
 import ru.kolodin.model.message.Message;
 import ru.kolodin.model.page.PageDTO;
 import ru.kolodin.model.users.dto.UserDTO;
-import ru.kolodin.service.main.HabitService;
+import ru.kolodin.service.entity.HabitService;
 
 import java.util.Date;
 

@@ -20,7 +20,7 @@ import ru.kolodin.model.habitstatus.Status;
 import ru.kolodin.model.habitstatus.dto.HabitStatusDTO;
 import ru.kolodin.model.message.Message;
 import ru.kolodin.model.page.PageDTO;
-import ru.kolodin.service.main.HabitStatusService;
+import ru.kolodin.service.entity.HabitStatusService;
 
 import java.util.Date;
 
