@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import ru.kolodin.model.habits.Habit;
 import ru.kolodin.model.habitstatus.HabitStatus;
 import ru.kolodin.model.habitstatus.Status;
 
@@ -58,4 +59,20 @@ public interface HabitStatusesRepository extends JpaRepository<HabitStatus, Long
      */
     List<HabitStatus> findAllByHabitIdAndDateBetween(Long id, Date dateFrom, Date dateTo);
 
+    /**
+     * Проверить наличие статуса привычки в БД
+     * @param id ID привычки.
+     * @param date Дата
+     * @return результат поиска
+     */
+    Boolean existsByHabitIdAndDate(Long id, Date date);
+
+    /**
+     * Проверить наличие статуса привычки в БД в определенный период
+     * @param id ID привычки.
+     * @param dateFrom от даты включительно.
+     * @param dateTo до даты включительно.
+     * @return результат поиска
+     */
+    Boolean existsByHabitIdAndDateBetween(Long id, Date dateFrom, Date dateTo);
 }

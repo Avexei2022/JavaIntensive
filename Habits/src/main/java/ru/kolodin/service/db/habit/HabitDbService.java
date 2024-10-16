@@ -90,6 +90,13 @@ public interface HabitDbService {
             Long userId, Frequency frequency, int pageNumber, int pageSize);
 
     /**
+     * Получить список всех привычек с фильтром периодичности.
+     * @param frequency периодичность.
+     * @return список привычек.
+     */
+    List<Habit> getAllByFrequency(Frequency frequency);
+
+    /**
      * Получить страницу из списка привычек пользователя с фильтром по дате создания.
      * @param userId ID пользователя.
      * @param dateFrom от даты включительно.

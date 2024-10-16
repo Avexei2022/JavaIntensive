@@ -17,6 +17,8 @@ import ru.kolodin.service.auth.AuthService;
 import ru.kolodin.service.db.PageService;
 import ru.kolodin.service.mapper.UserMapper;
 
+import java.util.List;
+
 /**
  * Сервис БД пользователей.
  */
@@ -61,6 +63,15 @@ public class UserDbServiceImpl implements UserDbService {
             throw new AnyReasonException("Что-то пошло не так: " + e.getMessage());
         }
         return userMapper.usersToPageDTO(userResultPage);
+    }
+
+    /**
+     * Получить список всех пользователей
+     * @return список всех пользователей
+     */
+    @Override
+    public List<User> findAll() {
+        return usersRepository.findAll();
     }
 
     @Override

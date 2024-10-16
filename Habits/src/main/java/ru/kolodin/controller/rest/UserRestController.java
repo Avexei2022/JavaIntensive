@@ -16,7 +16,7 @@ import ru.kolodin.model.page.PageDTO;
 import ru.kolodin.model.users.Role;
 import ru.kolodin.model.users.dto.UserDTO;
 import ru.kolodin.model.users.dto.UserUpdateDTO;
-import ru.kolodin.service.main.UserService;
+import ru.kolodin.service.entity.UserService;
 
 /**
  * REST Контроллер пользователей

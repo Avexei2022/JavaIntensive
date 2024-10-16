@@ -54,4 +54,11 @@ public interface HabitsRepository extends JpaRepository<Habit, Long> {
      * @return страница из списка привычек пользователя.
      */
     Page<Habit> findAllByUserAndDateBetween(Long id, Date dateFrom, Date dateTo, Pageable pageable);
+
+    /**
+     * Получить список всех привычек с фильтром периодичности.
+     * @param frequency периодичность.
+     * @return список привычек.
+     */
+    List<Habit> findAllByFrequency(Frequency frequency);
 }

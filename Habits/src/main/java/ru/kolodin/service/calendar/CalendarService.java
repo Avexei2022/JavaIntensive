@@ -22,7 +22,7 @@ public class CalendarService {
     }
 
     /**
-     * Получить дату со смещением назад относительно текущей даты
+     * Получить дату со смещением назад относительно текущей даты исключая её
      * @param period количество дней
      * @return дата ранее текущей
      */
@@ -30,6 +30,17 @@ public class CalendarService {
         Date date = new Date();
         calendar.setTime(date);
         calendar.add(Calendar.DATE, - (period.getValue()));
+        return calendar.getTime();
+    }
+
+    /**
+     * Получить дату со смещением назад семи дней включая текущую дату
+     * @return дата ранее текущей
+     */
+    public Date getOffsetSevenDayBeforeIncludingToday() {
+        Date date = new Date();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, - 6);
         return calendar.getTime();
     }
 }

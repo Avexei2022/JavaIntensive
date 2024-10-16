@@ -47,4 +47,10 @@ public class HabitStatus {
      */
     @Column(name = "status")
     private Status status;
+
+    public HabitStatus(Habit habit, Date date, Status status) {
+        this.habit = habit;
+        this.date = date;
+        this.status = status;
+    }
 }

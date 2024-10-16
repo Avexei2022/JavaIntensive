@@ -150,6 +150,16 @@ public class HabitDbServiceImpl implements HabitDbService {
     }
 
     /**
+     * Получить список всех привычек с фильтром периодичности.
+     * @param frequency периодичность.
+     * @return список привычек.
+     */
+    @Override
+    public List<Habit> getAllByFrequency(Frequency frequency) {
+        return habitsRepository.findAllByFrequency(frequency);
+    }
+
+    /**
      * Получить страницу из списка привычек пользователя с фильтром по дате создания.
      * @param userId ID пользователя.
      * @param dateFrom от даты включительно.

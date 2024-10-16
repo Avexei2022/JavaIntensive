@@ -15,7 +15,7 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
-.idea/
+/.idea/
 *.iws
 *.iml
 *.ipr
@@ -34,3 +34,4 @@ build/
 .vscode/
 
 .gitignore
+/.gitignore
