@@ -20,7 +20,7 @@ import ru.kolodin.model.habitstatus.Status;
 import ru.kolodin.model.habitstatus.dto.HabitStatusDTO;
 import ru.kolodin.model.message.Message;
 import ru.kolodin.model.page.PageDTO;
-import ru.kolodin.service.main.HabitStatusService;
+import ru.kolodin.service.entity.HabitStatusService;
 
 import java.util.Date;
 
@@ -216,7 +216,7 @@ public class HabitStatusRestController {
             summary = "Получить страницу из списка статусов привычки"
     )
     @SecurityRequirement(name = "JWT")
-    @GetMapping("/habit/{pageNumber}/{pageSize}")
+    @PostMapping("/habit/{pageNumber}/{pageSize}")
     public ResponseEntity<PageDTO> getAllByHabit(
             @PathVariable("pageNumber")
             @Parameter(description = "номер запрашиваемой страницы")
@@ -252,7 +252,7 @@ public class HabitStatusRestController {
             summary = "Получить страницу из списка статусов привычки с фильтром по статусу"
     )
     @SecurityRequirement(name = "JWT")
-    @GetMapping("/habit/status/{pageNumber}/{pageSize}")
+    @PostMapping("/habit/status/{pageNumber}/{pageSize}")
     public ResponseEntity<PageDTO> getAllByUserAndFrequency(
             @PathVariable("pageNumber")
             @Parameter(description = "номер запрашиваемой страницы")
@@ -293,7 +293,7 @@ public class HabitStatusRestController {
             summary = "Получить страницу из списка статусов привычки с фильтром по дате."
     )
     @SecurityRequirement(name = "JWT")
-    @GetMapping("/habit/date/between/{pageNumber}/{pageSize}")
+    @PostMapping("/habit/date/between/{pageNumber}/{pageSize}")
     public ResponseEntity<PageDTO> getAllByHabitAndDateBetween(
             @PathVariable("pageNumber")
             @Parameter(description = "номер запрашиваемой страницы")
@@ -338,7 +338,7 @@ public class HabitStatusRestController {
             summary = "Получить страницу из списка статусов привычки с фильтром по периоду."
     )
     @SecurityRequirement(name = "JWT")
-    @GetMapping("/habit/date/period/{pageNumber}/{pageSize}")
+    @PostMapping("/habit/date/period/{pageNumber}/{pageSize}")
     public ResponseEntity<PageDTO> getAllByHabitAndDatePeriod(
             @PathVariable("pageNumber")
             @Parameter(description = "номер запрашиваемой страницы")

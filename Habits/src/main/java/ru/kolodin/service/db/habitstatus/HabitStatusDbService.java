@@ -1,6 +1,7 @@
 package ru.kolodin.service.db.habitstatus;
 
 import org.springframework.data.domain.Page;
+import ru.kolodin.model.habits.Habit;
 import ru.kolodin.model.habitstatus.HabitStatus;
 import ru.kolodin.model.habitstatus.Status;
 
@@ -96,4 +97,21 @@ public interface HabitStatusDbService {
      * @return результат поиска
      */
     Boolean isExists(Long id);
+
+    /**
+     * Проверить наличие статуса привычки в БД в конкретную дату
+     * @param habit Привычка
+     * @param date Дата
+     * @return результат поиска
+     */
+    Boolean isExistsByHabitAndDate(Habit habit, Date date);
+
+    /**
+     * Проверить наличие статуса привычки в БД в определенный период
+     * @param habit Привычка
+     * @param dateFrom от даты включительно.
+     * @param dateTo до даты включительно.
+     * @return результат поиска
+     */
+    Boolean isExistsByHabitAndDateBetween(Habit habit, Date dateFrom, Date dateTo);
 }
