@@ -1,4 +1,4 @@
-package ru.kolodin.service.main;
+package ru.kolodin.service.entity;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

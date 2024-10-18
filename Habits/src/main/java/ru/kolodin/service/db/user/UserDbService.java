@@ -5,6 +5,8 @@ import ru.kolodin.model.page.PageDTO;
 import ru.kolodin.model.users.User;
 import ru.kolodin.model.users.dto.UserDTO;
 
+import java.util.List;
+
 /**
  * Сервис БД пользователей.
  */
@@ -18,6 +20,12 @@ public interface UserDbService {
      * @return запрашиваемая страница из списка пользователей с информационной частью о списке
      */
     PageDTO findAll(Integer pageNumber, Integer pageSize);
+
+    /**
+     * Получить список всех пользователей
+     * @return список всех пользователей
+     */
+    List<User> findAll();
 
     /**
      * Получить пользователя по ID
